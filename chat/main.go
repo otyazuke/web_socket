@@ -1,4 +1,4 @@
-package chat
+package main
 
 import (
 	"flag"
@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"path/filepath"
 	"sync"
+
+	"os"
+
+	"github.com/otyazuke/web_socket/trace"
 )
 
 type templateHandler struct {
@@ -27,6 +31,7 @@ func main() {
 	flag.Parse()
 
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", r)
 
