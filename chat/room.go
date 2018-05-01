@@ -11,20 +11,24 @@ import (
 )
 
 type room struct {
+	// clientからのメッセージを受け取る
 	forward chan *message
 	join    chan *client
 	leave   chan *client
 	clients map[*client]bool
 	tracer  trace.Tracer
+	// アバターの情報を取得します
+	avatar Avatar
 }
 
-func newRoom() *room {
+func newRoom(avatar Avatar) *room {
 	return &room{
 		forward: make(chan *message),
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
 		tracer:  trace.Off(),
+		avatar:  avatar,
 	}
 }
 

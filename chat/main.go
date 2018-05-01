@@ -70,7 +70,7 @@ func main() {
 		google.New(gc.Config.ClientID, gc.Config.Secret, "http://localhost:3000/auth/callback/google"),
 	)
 
-	r := newRoom()
+	r := newRoom(UseGravaratAvatar)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
