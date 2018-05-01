@@ -11,6 +11,7 @@ import (
 )
 
 type room struct {
+	// clientからのメッセージを受け取る
 	forward chan *message
 	join    chan *client
 	leave   chan *client
