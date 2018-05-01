@@ -20,6 +20,8 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+var avatars Avatar = UseFileSystemAvatar
+
 type templateHandler struct {
 	once     sync.Once
 	filename string
@@ -70,7 +72,7 @@ func main() {
 		google.New(gc.Config.ClientID, gc.Config.Secret, "http://localhost:3000/auth/callback/google"),
 	)
 
-	r := newRoom(UseFileSystemAvatar)
+	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
