@@ -70,7 +70,7 @@ func main() {
 		google.New(gc.Config.ClientID, gc.Config.Secret, "http://localhost:3000/auth/callback/google"),
 	)
 
-	r := newRoom(UseGravaratAvatar)
+	r := newRoom(UseFileSystemAvatar)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
@@ -88,6 +88,7 @@ func main() {
 	})
 	http.Handle("/upload", &templateHandler{filename: "upload.html"})
 	http.HandleFunc("/uploader", uploadHandler)
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars"))))
 
 	// チャットルームを開始する
 	go r.run()
