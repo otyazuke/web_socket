@@ -20,7 +20,11 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-var avatars Avatar = UseFileSystemAvatar
+var avatars Avatar = TryAvatars{
+	UseFileSystemAvatar,
+	UseAuthAvatar,
+	UseGravaratAvatar,
+}
 
 type templateHandler struct {
 	once     sync.Once
