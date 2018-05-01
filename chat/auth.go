@@ -62,11 +62,12 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 		user, err := provider.GetUser(creds)
 		if err != nil {
-			log.Fatalln("ユーザの種t国")
+			log.Fatalln("ユーザの取得に失敗しました")
 		}
 
 		authCookieValue := objx.New(map[string]interface{}{
-			"name": user.Name(),
+			"name":       user.Name(),
+			"avatar_url": user.AvatarURL(),
 		}).MustBase64()
 
 		http.SetCookie(w, &http.Cookie{
